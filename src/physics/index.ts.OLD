@@ -1,0 +1,50 @@
+import { Vector3 } from 'three';
+import Ball from '../Ball';
+import Box from '../Box';
+import Object3D from '../Object3D';
+import * as collisions from './collisions';
+
+const G = 9.81;
+
+let time: number, oldTime: number;
+let _objects: Object3D[] = [];
+
+export function init(objects: Object3D[]) {
+  _objects = objects.filter((object) => !object.isStatic);
+  _objects.forEach((object) => {
+    object.acceleration = new Vector3(0, 0, -G);
+  });
+}
+
+export function compute(balls: Ball[], boxes: Box[]) {
+  time = new Date().getTime();
+  const dt = oldTime !== undefined ? (time - oldTime) / 1000 : 0;
+  oldTime = time;
+
+  // Collisions
+  // const collidedObjects = collisions.detect(balls, boxes);
+  // const collidedObjects = collisions.detect([...balls, ...boxes]);
+  // collisions.handle(collidedObjects);
+
+  // Gravity
+  [...balls, ...boxes]
+    // .filter((object) => !collidedObjects.includes(object))
+    .forEach((object) => {
+      object.velocity.add(
+        new Vector3(
+          object.acceleration.x * dt,
+          object.acceleration.y * dt,
+          object.acceleration.z * dt
+        )
+      );
+      console.log('object.velocity', object.velocity);
+      object.position.add(
+        new Vector3(
+          object.velocity.x * dt,
+          object.velocity.y * dt,
+          object.velocity.z * dt
+        )
+      );
+      // console.log('object.position', object.position);
+    });
+}
