@@ -98,9 +98,15 @@ function initScene() {
   // console.log('boxes', boxes);
   boxes.forEach((box) => scene.add(box));
 
-  const ball = new Ball(false, 40, new Vector3(0, -50, 0));
-  ball.velocity = new Vector3(0, 50, 0);
-  balls.push(ball);
+  const ball1 = new Ball(false, 40); 
+  ball1.position.add(new Vector3(0, -50, 0));
+  ball1.velocity = new Vector3(0, 50, 0);
+  balls.push(ball1);
+  const ball2 = new Ball(false, 30);
+  ball2.position.add(new Vector3(0, -50, 100));
+  ball2.velocity = new Vector3(0, 40, 0);
+  balls.push(ball2);
+
   // balls.push(new Ball(35, new Vector3(0, 20, 200)));
   // balls.push(new Ball(30, new Vector3(0, -10, 100)));
   // balls.push(new Ball(25, new Vector3(0, -10, 100)));
