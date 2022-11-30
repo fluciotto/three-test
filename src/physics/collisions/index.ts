@@ -96,7 +96,6 @@ export function detect(objects: Object3d[]) {
           const collisionNormal = triangle2.normal
             .clone()
             .applyQuaternion(object2.quaternion);
-          console.log('collisionNormal', collisionNormal);
           acc = [
             ...acc,
             {
@@ -162,7 +161,10 @@ export function handle(collisions: TriangleVsTriangle[]) {
     );
     console.log('object1.velocity', collision.object1.velocity);
 
-    collision.object1.angularVelocity.x -=
-      collision.object1.velocity.y / (10 * 2 * Math.PI);
+    const velocityDiff = collision.object2.velocity
+      .clone()
+      .sub(collision.object1.velocity);
+    console.log('velocityDiff', velocityDiff);
+    collision.object1.angularVelocity.x = velocityDiff.y / (10 * 2 * Math.PI);
   });
 }
