@@ -116,7 +116,7 @@ export function detect(objects: Object3d[]) {
     []
   );
 
-  if (collisions.length) console.log('collisions', collisions);
+  // if (collisions.length) console.log('collisions', collisions);
 
   return collisions;
 }
@@ -126,16 +126,18 @@ export function detect(objects: Object3d[]) {
 //
 export function handle(collisions: TriangleVsTriangle[]) {
   collisions.forEach((collision) => {
-    console.log('> Triangle collision');
-    console.log('distance', collision.distance);
+    // console.log('> Triangle collision');
+    // console.log('distance', collision.distance);
+
     // Correct ball position
-    console.log('object1.position', collision.object1.position);
+    // console.log('object1.position', collision.object1.position);
     collision.object1.position.sub(
       collision.normal
         .clone()
         .multiplyScalar(collision.distance + Number.MIN_VALUE)
     );
-    console.log('object1.position', collision.object1.position);
+    // console.log('object1.position', collision.object1.position);
+
     // Compute ball velocity
 
     // const J =
@@ -152,18 +154,24 @@ export function handle(collisions: TriangleVsTriangle[]) {
           )) /
       (1 / collision.object1.mass + 1 / collision.object2.mass);
 
-    console.log('object1.velocity', collision.object1.velocity);
+    // console.log('object1.velocity', collision.object1.velocity);
     collision.object1.velocity.sub(
       collision.normal.clone().multiplyScalar(J / collision.object1.mass)
     );
     collision.object2.velocity.add(
       collision.normal.clone().multiplyScalar(J / collision.object2.mass)
     );
-    console.log('object1.velocity', collision.object1.velocity);
+    // console.log('object1.velocity', collision.object1.velocity);
 
     const velocityDiff = collision.object2.velocity
       .clone()
       .sub(collision.object1.velocity);
-    collision.object1.angularVelocity.x = velocityDiff.y / (10 * 2 * Math.PI);
+    // collision.object1.angularVelocity.x = velocityDiff.y / (5 * 2 * Math.PI);
+    collision.object1.angularVelocity.x =
+      velocityDiff.y /
+      collision.object1
+        .localToWorld(collision.triangle1.position)
+        .sub(collision.object1.position)
+        .length();
   });
 }
