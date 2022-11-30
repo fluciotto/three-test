@@ -14,6 +14,7 @@ abstract class Object3d extends Mesh {
   // position: Vector3;
   velocity: Vector3;
   acceleration: Vector3;
+  angularVelocity: Vector3;
 
   constructor(
     isStatic: boolean,
@@ -34,6 +35,7 @@ abstract class Object3d extends Mesh {
     if (position) this.position.add(position);
     this.velocity = velocity || new Vector3(0, 0, 0);
     this.acceleration = acceleration || new Vector3(0, 0, 0);
+    this.angularVelocity = new Vector3(0, 0, 0);
   }
 
   // Compute triangles from geometry and put them in geometry.userData

@@ -46,9 +46,9 @@ export function compute() {
         )
       );
       // console.log('object.position', object.position);
-      // console.log(
-      //   'object.position',
-      //   object.geometry.userData.triangles[0].position
-      // );
+
+      object.rotation.x += object.angularVelocity.x * dt;
+      object.rotation.y += object.angularVelocity.y * dt;
+      object.rotation.z += object.angularVelocity.z * dt;
     });
 }
