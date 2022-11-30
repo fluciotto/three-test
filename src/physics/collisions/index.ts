@@ -83,8 +83,8 @@ export function detect(objects: Object3d[]) {
         const s = Math.sign(v0.z) + Math.sign(v1.z) + Math.sign(v2.z);
         // console.log(v0.z, v1.z, v2.z, s);
         if (s !== 0 && s !== -3 && s !== 3) {
-          console.log('COLLISION!!!!');
-          console.log(triangle1.vertices, [v0, v1, v2], pToPVector.length());
+          // console.log('COLLISION!!!!');
+          // console.log(triangle1.vertices, [v0, v1, v2], pToPVector.length());
           const nearestVertex = [v0, v1, v2].sort((v1, v2) =>
             v1.z < v2.z ? -1 : v1.z > v2.z ? 1 : 0
           )[0];
@@ -161,5 +161,8 @@ export function handle(collisions: TriangleVsTriangle[]) {
       collision.normal.clone().multiplyScalar(J / collision.object2.mass)
     );
     console.log('object1.velocity', collision.object1.velocity);
+
+    collision.object1.angularVelocity.x -=
+      collision.object1.velocity.y / (10 * 2 * Math.PI);
   });
 }

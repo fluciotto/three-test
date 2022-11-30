@@ -13,7 +13,7 @@ class Ball extends Object3d {
   ) {
     super(
       isStatic,
-      new SphereGeometry(radius, 6, 6),
+      new SphereGeometry(radius, 8, 8),
       Math.pow(radius, 3),
       position,
       velocity,
