@@ -92,7 +92,11 @@ export function detect(objects: Object3d[]) {
             return acc;
           }
           // const collisionNormal = pToPVector.clone().normalize();
-          const collisionNormal = triangle2.normal;
+          // const collisionNormal = triangle2.normal;
+          const collisionNormal = triangle2.normal
+            .clone()
+            .applyQuaternion(object2.quaternion);
+          console.log('collisionNormal', collisionNormal);
           acc = [
             ...acc,
             {
