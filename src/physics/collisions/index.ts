@@ -164,7 +164,6 @@ export function handle(collisions: TriangleVsTriangle[]) {
     const velocityDiff = collision.object2.velocity
       .clone()
       .sub(collision.object1.velocity);
-    console.log('velocityDiff', velocityDiff);
     collision.object1.angularVelocity.x = velocityDiff.y / (10 * 2 * Math.PI);
   });
 }
