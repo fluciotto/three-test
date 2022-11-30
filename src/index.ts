@@ -81,7 +81,7 @@ function initScene() {
   const fixedPlane = new Plane(
     true,
     new Vector2(200, 200),
-    new Vector3(0, 0, -100)
+    new Vector3(0, 50, 0)
   );
   fixedPlane.rotateX(Math.PI / 6);
   planes.push(fixedPlane);
@@ -98,8 +98,8 @@ function initScene() {
   // console.log('boxes', boxes);
   boxes.forEach((box) => scene.add(box));
 
-  const ball = new Ball(false, 40, new Vector3(0, -30, 0));
-  ball.velocity = new Vector3(0, 30, 0);
+  const ball = new Ball(false, 40, new Vector3(0, -50, 0));
+  ball.velocity = new Vector3(0, 50, 0);
   balls.push(ball);
   // balls.push(new Ball(35, new Vector3(0, 20, 200)));
   // balls.push(new Ball(30, new Vector3(0, -10, 100)));
