@@ -58,17 +58,8 @@ export function detect(objects: Object3d[]) {
         //   .filter((t) => t)
       );
       // console.log('trianglesCombinations', trianglesCombinations);
-      let min = Infinity,
-        max = -Infinity;
       trianglesCombinations.forEach((c: Triangle[]) => {
         const [triangle1, triangle2] = c;
-        const pToPVector = triangle2.position
-          .clone()
-          .add(object2.position)
-          .sub(triangle1.position.clone().add(object1.position));
-        // console.log('pToPVector', pToPVector.length());
-        min = Math.min(min, pToPVector.length());
-        max = Math.max(max, pToPVector.length());
         const [v0, v1, v2] = triangle1.vertices.map((vertex) =>
           object2.worldToLocal(object1.localToWorld(vertex.clone()))
         );
@@ -83,16 +74,14 @@ export function detect(objects: Object3d[]) {
         const s = Math.sign(v0.z) + Math.sign(v1.z) + Math.sign(v2.z);
         // console.log(v0.z, v1.z, v2.z, s);
         if (s !== 0 && s !== -3 && s !== 3) {
-          // console.log('COLLISION!!!!');
-          // console.log(triangle1.vertices, [v0, v1, v2], pToPVector.length());
+          console.log('COLLISION!!!!');
+          console.log(triangle1.vertices, [v0, v1, v2]);
           const nearestVertex = [v0, v1, v2].sort((v1, v2) =>
             v1.z < v2.z ? -1 : v1.z > v2.z ? 1 : 0
           )[0];
           if (!triangle2.containsPoint(nearestVertex)) {
             return acc;
           }
-          // const collisionNormal = pToPVector.clone().normalize();
-          // const collisionNormal = triangle2.normal;
           const collisionNormal = triangle2.normal
             .clone()
             .applyQuaternion(object2.quaternion);
@@ -103,7 +92,6 @@ export function detect(objects: Object3d[]) {
               object2,
               triangle1,
               triangle2,
-              // distance: pToPVector.length(),
               distance: Math.min(v0.z, v1.z, v2.z),
               normal: collisionNormal,
             },

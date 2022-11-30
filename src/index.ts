@@ -78,13 +78,14 @@ function initScene() {
   // fallingPlane.rotateX(Math.PI / 4);
   // planes.push(fallingPlane);
 
-  const fixedPlane = new Plane(
-    true,
-    new Vector2(200, 200),
-    new Vector3(0, 50, 0)
-  );
-  fixedPlane.rotateX(Math.PI / 6);
-  planes.push(fixedPlane);
+  // const fixedPlane = new Plane(
+  //   true,
+  //   new Vector2(200, 200),
+  //   new Vector3(0, 50, 0)
+  // );
+  // fixedPlane.rotateX(Math.PI / 6);
+  // planes.push(fixedPlane);
+
   planes.forEach((plane) => scene.add(plane));
 
   // boxes.push(new Box(true, new Vector3(200, 200, 10), new Vector3(0, 0, -200)));
@@ -98,14 +99,21 @@ function initScene() {
   // console.log('boxes', boxes);
   boxes.forEach((box) => scene.add(box));
 
-  const ball1 = new Ball(false, 40); 
-  ball1.position.add(new Vector3(0, -50, 0));
-  ball1.velocity = new Vector3(0, 50, 0);
-  balls.push(ball1);
-  const ball2 = new Ball(false, 30);
-  ball2.position.add(new Vector3(0, -50, 100));
-  ball2.velocity = new Vector3(0, 40, 0);
-  balls.push(ball2);
+  const staticBall = new Ball(true, 50);
+  staticBall.position.add(new Vector3(0, 0, 0));
+  balls.push(staticBall);
+  const dynamicBall = new Ball(false, 30);
+  dynamicBall.position.add(new Vector3(0, 0, 100));
+  balls.push(dynamicBall);
+
+  // const ball1 = new Ball(true, 40);
+  // ball1.position.add(new Vector3(0, -50, 0));
+  // // ball1.velocity = new Vector3(0, 50, 0);
+  // balls.push(ball1);
+  // const ball2 = new Ball(false, 30);
+  // ball2.position.add(new Vector3(0, -50, 100));
+  // ball2.velocity = new Vector3(0, 40, 0);
+  // balls.push(ball2);
 
   // balls.push(new Ball(35, new Vector3(0, 20, 200)));
   // balls.push(new Ball(30, new Vector3(0, -10, 100)));
