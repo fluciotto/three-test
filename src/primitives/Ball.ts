@@ -21,6 +21,7 @@ class Ball extends Object3d {
     );
     this.radius = radius;
     // console.log(this.geometry);
+    this.material.wireframe = true;
   }
 }
 
