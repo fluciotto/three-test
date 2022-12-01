@@ -1,3 +1,4 @@
+import { ArrowHelper } from 'three';
 import { Object3d, Triangle } from '../../primitives';
 import { TriangleVsTriangle } from './@types';
 
@@ -44,10 +45,42 @@ export function detect(objects: Object3d[]) {
         .triangles as Triangle[];
       const object2Triangles = object2.geometry.userData
         .triangles as Triangle[];
+      object1Triangles.forEach((triangle) => {
+        const arrow = new ArrowHelper(
+          triangle.normal
+            .clone()
+            //.applyQuaternion(object1.quaternion)
+            .multiplyScalar(
+              object1.velocity
+                .clone()
+                .dot(
+                  triangle.normal.clone().applyQuaternion(object1.quaternion)
+                )
+            ),
+          triangle.position,
+          100 * triangle.normal.length(),
+          'red'
+        );
+        object1.add(arrow);
+      });
       const trianglesCombinations = object1Triangles.flatMap(
         (triangle1) =>
           object2Triangles.reduce((acc: Triangle[][], triangle2) => {
-            // if (triangle1.normal.dot(triangle2.normal) >= 0) return acc;
+            // const dot = triangle1.normal.dot(triangle2.normal);
+            const dot = triangle1.normal
+              .clone()
+              .applyQuaternion(object1.quaternion)
+              .dot(
+                triangle2.normal.clone().applyQuaternion(object2.quaternion)
+              );
+            // console.log(
+            //   triangle1.normal,
+            //   triangle1.normal.clone().applyQuaternion(object1.quaternion),
+            //   triangle2.normal,
+            //   triangle2.normal.clone().applyQuaternion(object2.quaternion),
+            //   dot
+            // );
+            if (dot >= 0) return acc;
             return [...acc, [triangle1, triangle2]];
           }, [])
         // object2Triangles
@@ -57,7 +90,8 @@ export function detect(objects: Object3d[]) {
         //   })
         //   .filter((t) => t)
       );
-      // console.log('trianglesCombinations', trianglesCombinations);
+      console.log('trianglesCombinations', trianglesCombinations);
+      return [];
       trianglesCombinations.forEach((c: Triangle[]) => {
         const [triangle1, triangle2] = c;
         const [v0, v1, v2] = triangle1.vertices.map((vertex) =>
@@ -74,8 +108,8 @@ export function detect(objects: Object3d[]) {
         const s = Math.sign(v0.z) + Math.sign(v1.z) + Math.sign(v2.z);
         // console.log(v0.z, v1.z, v2.z, s);
         if (s !== 0 && s !== -3 && s !== 3) {
-          console.log('COLLISION!!!!');
-          console.log(triangle1.vertices, [v0, v1, v2]);
+          // console.log('COLLISION!!!!');
+          // console.log(triangle1.vertices, [v0, v1, v2]);
           const nearestVertex = [v0, v1, v2].sort((v1, v2) =>
             v1.z < v2.z ? -1 : v1.z > v2.z ? 1 : 0
           )[0];

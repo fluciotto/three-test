@@ -88,6 +88,14 @@ function initScene() {
 
   planes.forEach((plane) => scene.add(plane));
 
+  const staticBox = new Box(true, new Vector3(100, 100, 100));
+  staticBox.position.add(new Vector3(0, 0, -50));
+  boxes.push(staticBox);
+  const dynamicBox = new Box(false, new Vector3(30, 30, 30));
+  dynamicBox.position.add(new Vector3(0, 0, 100));
+  dynamicBox.angularVelocity = new Vector3(1, 0, 0);
+  boxes.push(dynamicBox);
+
   // boxes.push(new Box(true, new Vector3(200, 200, 10), new Vector3(0, 0, -200)));
   // boxes.push(new Box(new Vector3(10, 200, 600), new Vector3(-100, 0, 100)));
   // boxes.push(new Box(new Vector3(10, 200, 600), new Vector3(100, 0, 100)));
@@ -99,12 +107,12 @@ function initScene() {
   // console.log('boxes', boxes);
   boxes.forEach((box) => scene.add(box));
 
-  const staticBall = new Ball(true, 50);
-  staticBall.position.add(new Vector3(0, 0, 0));
-  balls.push(staticBall);
-  const dynamicBall = new Ball(false, 30);
-  dynamicBall.position.add(new Vector3(0, 0, 100));
-  balls.push(dynamicBall);
+  // const staticBall = new Ball(true, 50);
+  // staticBall.position.add(new Vector3(0, 0, 0));
+  // balls.push(staticBall);
+  // const dynamicBall = new Ball(false, 30);
+  // dynamicBall.position.add(new Vector3(0, 0, 100));
+  // balls.push(dynamicBall);
 
   // const ball1 = new Ball(true, 40);
   // ball1.position.add(new Vector3(0, -50, 0));
@@ -131,7 +139,7 @@ function initScene() {
     if (paused) return;
     // physics.compute(balls, boxes);
     physics.compute();
-  }, 10);
+  }, 100);
 
   //document.addEventListener('mousemove', onDocumentMouseMove, false);
 }
