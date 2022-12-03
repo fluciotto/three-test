@@ -93,7 +93,8 @@ function initScene() {
   boxes.push(staticBox);
   const dynamicBox = new Box(false, new Vector3(30, 30, 30));
   dynamicBox.position.add(new Vector3(0, 0, 100));
-  dynamicBox.angularVelocity = new Vector3(1, 0, 0);
+  // dynamicBox.angularVelocity = new Vector3(1, 0, 0);
+  // dynamicBox.rotation.x = Math.PI / 4;
   boxes.push(dynamicBox);
 
   // boxes.push(new Box(true, new Vector3(200, 200, 10), new Vector3(0, 0, -200)));
